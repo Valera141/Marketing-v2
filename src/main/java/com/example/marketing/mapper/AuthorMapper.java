@@ -4,6 +4,8 @@ import com.example.marketing.dto.AuthorRequestDTO;
 import com.example.marketing.dto.AuthorResponseDTO;
 import com.example.marketing.model.Author;
 
+import java.time.OffsetDateTime;
+
 public class AuthorMapper {
 
 	public static AuthorResponseDTO toResponse(Author entity) {
@@ -15,7 +17,7 @@ public class AuthorMapper {
 				.verified(entity.getIsVerified())
 				.follower(entity.getFollowerCount())
 				.priority(entity.getIsPriorityInfluencer())
-				.firstRegistrationDate(entity.getFirstRegistrationDate())
+				.firstRegistrationDate(OffsetDateTime.from(entity.getFirstRegistrationDate()))
 				.build();
 	}
 
@@ -27,8 +29,10 @@ public class AuthorMapper {
 				.isVerified(request.verified())
 				.followerCount(request.follower() != null ? request.follower() : 0)
 				.isPriorityInfluencer(request.priority())
+				.firstRegistrationDate(request.firstRegistrationDate())  // ✔ AGREGADO
 				.build();
 	}
+
 
 	public static void copyToEntity(AuthorRequestDTO request, Author existing) {
 		if (request == null || existing == null) return;
@@ -44,5 +48,8 @@ public class AuthorMapper {
 
 		if (request.priority() != null)
 			existing.setIsPriorityInfluencer(request.priority());
+
+		if (request.firstRegistrationDate() != null)
+			existing.setFirstRegistrationDate(request.firstRegistrationDate());
 	}
 }
