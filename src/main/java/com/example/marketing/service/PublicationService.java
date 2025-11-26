@@ -23,15 +23,15 @@ public interface PublicationService {
 
     void delete(Integer publicationId);
     
-    // Page<PublicationResponseDTO> findByCampaignId(Integer campaignId, Pageable pageable);
+    Page<PublicationResponseDTO> findByCampaignId(Integer campaignId, Pageable pageable);
 
-    // Page<PublicationResponseDTO> findByAuthorId(Integer authorId, Pageable pageable);
+    Page<PublicationResponseDTO> findByAuthorId(Integer authorId, Pageable pageable);
 
     // --- Métodos de Lógica de Negocio para Alertas ---
 
-    //boolean hasNegativeWave(Integer campaignId);
+    boolean hasNegativeWave(Integer campaignId);
 
     List<PublicationResponseDTO> findPotentialViralContent();
 
-    //List<PublicationResponseDTO> findNegativeInfluencerActivity();
+    List<PublicationResponseDTO> findNegativeInfluencerActivity();
 }

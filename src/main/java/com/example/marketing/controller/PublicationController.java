@@ -11,11 +11,14 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/publications") // Standardized base path
@@ -85,45 +88,45 @@ public class PublicationController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    // @Operation(summary = "Get all publications for a specific campaign (paginated)")
-    // @ApiResponses(value = {
-    //     @ApiResponse(responseCode = "200", description = "Search completed. Returns a page of publications.")
-    // })
-    // @GetMapping("/campaign/{campaignId}")
-    // public ResponseEntity<Page<PublicationResponseDTO>> getPublicationsByCampaignId(
-    //         @PathVariable Integer campaignId, 
-    //         @PageableDefault(size = 10) Pageable pageable) {
-    //     Page<PublicationResponseDTO> publications = publicationService.findByCampaignId(campaignId, pageable);
-    //     return ResponseEntity.ok(publications);
-    // }
+    @Operation(summary = "Get all publications for a specific campaign (paginated)")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Search completed. Returns a page of publications.")
+    })
+    @GetMapping("/campaign/{campaignId}")
+    public ResponseEntity<Page<PublicationResponseDTO>> getPublicationsByCampaignId(
+            @PathVariable Integer campaignId, 
+            @PageableDefault(size = 10) Pageable pageable) {
+        Page<PublicationResponseDTO> publications = publicationService.findByCampaignId(campaignId, pageable);
+        return ResponseEntity.ok(publications);
+    }
 
-    // @Operation(summary = "Get all publications by a specific author (paginated)")
-    // @ApiResponses(value = {
-    //     @ApiResponse(responseCode = "200", description = "Search completed. Returns a page of publications.")
-    // })
-    // @GetMapping("/author/{authorId}")
-    // public ResponseEntity<Page<PublicationResponseDTO>> getPublicationsByAuthorId(
-    //         @PathVariable Integer authorId, 
-    //         @PageableDefault(size = 10, sort = "publicationDate") Pageable pageable) {
-    //     Page<PublicationResponseDTO> publications = publicationService.findByAuthorId(authorId, pageable);
-    //     return ResponseEntity.ok(publications);
-    // }
+    @Operation(summary = "Get all publications by a specific author (paginated)")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Search completed. Returns a page of publications.")
+    })
+    @GetMapping("/author/{authorId}")
+    public ResponseEntity<Page<PublicationResponseDTO>> getPublicationsByAuthorId(
+            @PathVariable Integer authorId, 
+            @PageableDefault(size = 10, sort = "publicationDate") Pageable pageable) {
+        Page<PublicationResponseDTO> publications = publicationService.findByAuthorId(authorId, pageable);
+        return ResponseEntity.ok(publications);
+    }
     
     // =======================================================
     // === Endpoints for Alert Generation ====================
     // =======================================================
 
-    // @Operation(summary = "Check if a wave of negative comments exists")
-    // @ApiResponses(value = {
-    //     @ApiResponse(responseCode = "200", description = "Verification completed successfully"),
-    //     @ApiResponse(responseCode = "404", description = "No publications matching the criteria were found.")
-    // })
-    // @GetMapping("/alerts/negative-wave")
-    // public ResponseEntity<Map<String, Object>> checkNegativeWave(@RequestParam Integer campaignId) {
-    //     boolean hasWave = publicationService.hasNegativeWave(campaignId);
-    //     Map<String, Object> response = Collections.singletonMap("negativeWaveDetected", hasWave);
-    //     return ResponseEntity.ok(response);
-    // }
+    @Operation(summary = "Check if a wave of negative comments exists")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Verification completed successfully"),
+        @ApiResponse(responseCode = "404", description = "No publications matching the criteria were found.")
+    })
+    @GetMapping("/alerts/negative-wave")
+    public ResponseEntity<Map<String, Object>> checkNegativeWave(@RequestParam Integer campaignId) {
+        boolean hasWave = publicationService.hasNegativeWave(campaignId);
+        Map<String, Object> response = Collections.singletonMap("negativeWaveDetected", hasWave);
+        return ResponseEntity.ok(response);
+    }
 
     @Operation(summary = "Find content with viral potential")
     @ApiResponses(value = {
@@ -136,14 +139,14 @@ public class PublicationController {
         return ResponseEntity.ok(publications);
     }
 
-    // @Operation(summary = "Find negative influencer activity")
-    // @ApiResponses(value = {
-    //     @ApiResponse(responseCode = "200", description = "Search completed"),
-    //     @ApiResponse(responseCode = "404", description = "No publications matching the criteria were found.")
-    // })
-    // @GetMapping("/alerts/negative-influencers")
-    // public ResponseEntity<List<PublicationResponseDTO>> findNegativeInfluencerActivity() {
-    //     List<PublicationResponseDTO> publications = publicationService.findNegativeInfluencerActivity();
-    //     return ResponseEntity.ok(publications);
-    // }
+    @Operation(summary = "Find negative influencer activity")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Search completed"),
+        @ApiResponse(responseCode = "404", description = "No publications matching the criteria were found.")
+    })
+    @GetMapping("/alerts/negative-influencers")
+    public ResponseEntity<List<PublicationResponseDTO>> findNegativeInfluencerActivity() {
+        List<PublicationResponseDTO> publications = publicationService.findNegativeInfluencerActivity();
+        return ResponseEntity.ok(publications);
+    }
 }

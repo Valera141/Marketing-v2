@@ -17,17 +17,17 @@ public class PublicationResponseDTO {
     @JsonProperty("identifier publication api")
     private Integer publicationApiId;
 
-     @JsonProperty("campaign")
-     private Integer campaignId;
+    @JsonProperty("campaign")
+    private Integer campaignId;
 
-     @JsonProperty("campaign name")
-     private String campaignName;
-    
-     @JsonProperty("author api")
-     private Integer authorApiId;
-    
-     @JsonProperty("author username")
-     private String authorUsername;
+    @JsonProperty("campaign name")
+    private String campaignName;
+
+    @JsonProperty("author api")
+    private Integer authorApiId;
+
+    @JsonProperty("author username")
+    private String authorUsername;
 
     @JsonProperty("text content")
     private String textContent;
@@ -49,7 +49,7 @@ public class PublicationResponseDTO {
 
     @JsonProperty("classification Priority")
     private String classificationPriority;
-    
+
     @JsonProperty("collection Date")
     private OffsetDateTime collectionDate;
 }

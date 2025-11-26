@@ -17,8 +17,12 @@ public class PublicationMapper {
         }
         PublicationResponseDTO dto = new PublicationResponseDTO();
         dto.setPublicationApiId(entity.getPublicationApiId()); // Asegúrate que el getter sea getPublicationId()
-        //dto.setCampaignId(entity.getCampaign().getCampaignId());
-        //dto.setAuthorApiId(entity.getAuthor().getAuthorId());
+        dto.setCampaignId(entity.getCampaign().getCampaignId());
+        dto.setCampaignName(entity.getCampaign().getCampaignName());
+
+        dto.setAuthorApiId(entity.getAuthor().getAuthorApiId());
+        dto.setAuthorUsername(entity.getAuthor().getUsername());
+        
         dto.setTextContent(entity.getTextContent());
         dto.setPublicationDate(entity.getPublicationDate());
         dto.setLikes(entity.getLikes());
@@ -46,6 +50,7 @@ public class PublicationMapper {
         entity.setShares(dto.shares());
         entity.setGeolocation(dto.geolocation());
         entity.setPublicationUrl(dto.publicationUrl());
+        entity.setClassificationPriority(dto.classificationPriority());
         entity.setCollectionDate(OffsetDateTime.now());
         return entity;
     }
@@ -66,5 +71,6 @@ public class PublicationMapper {
         entity.setShares(dto.shares());
         entity.setGeolocation(dto.geolocation());
         entity.setPublicationUrl(dto.publicationUrl());
+        entity.setClassificationPriority(dto.classificationPriority());
     }
 }

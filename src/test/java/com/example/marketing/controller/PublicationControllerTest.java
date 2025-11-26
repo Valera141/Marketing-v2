@@ -64,8 +64,19 @@ class PublicationControllerTest {
     }
 
     private PublicationRequestDTO req(String text) {
-        return new PublicationRequestDTO(text, OffsetDateTime.now(), 10, 5, 2, null, null, null);
-    }
+    return new PublicationRequestDTO(
+        1,                         // 1. campaignId (Obligatorio)
+        10,                        // 2. authorApiId (Obligatorio)
+        text,                      // 3. textContent
+        OffsetDateTime.now(),      // 4. publicationDate
+        10,                        // 5. likes
+        5,                         // 6. comments
+        2,                         // 7. shares
+        "Teziutlan, MX",           // 8. geolocation (No nulo, debe ser String)
+        "http://example.com/url",  // 9. publicationUrl (No nulo, debe ser String)
+        "Neutral"                  // 10. classificationPriority (No nulo, debe ser String)
+    );
+}
 
     // =======================================================
     // === Pruebas para Endpoints CRUD =======================

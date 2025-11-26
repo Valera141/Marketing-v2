@@ -1,6 +1,7 @@
 package com.example.marketing.model;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -11,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -28,7 +30,7 @@ public class Publication {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "publication_api_id", length = 50)
-    private Integer  publicationApiId;
+    private Integer publicationApiId;
 
     @Column(name = "text_content", columnDefinition = "TEXT")
     private String textContent;
@@ -57,15 +59,18 @@ public class Publication {
     @Column(name = "collection_date", columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private OffsetDateTime collectionDate;
 
-     @OneToOne(mappedBy = "publication", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-     private TextAnalysis textAnalysis;
+    @OneToOne(mappedBy = "publication", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private TextAnalysis textAnalysis;
 
-     @ManyToOne(fetch = FetchType.LAZY)
-     @JoinColumn(name = "author_api_id", nullable = false)
-     private Author author;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "author_api_id", nullable = false)
+    private Author author;
 
     @ManyToOne(fetch = FetchType.LAZY) // Usar LAZY es una buena práctica para el rendimiento
     @JoinColumn(name = "campaign_id", nullable = false)
     private Campaign campaign;
+
+    @OneToMany(mappedBy = "publication", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<GeneratedAlert> generatedAlerts;
 
 }
