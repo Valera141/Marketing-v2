@@ -27,7 +27,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PublicationServiceImpl implements PublicationService {
 
-    // --- CORRECCIÓN: Ahora solo hay un repositorio para todo lo relacionado con Publicaciones ---
+    // --- CORRECCIÓN: Ahora solo hay un repositorio para todo lo relacionado con
+    // Publicaciones ---
     private final PublicationRepository publicationRepository;
     private final AuthorRepository authorRepository;
     private final CampaignRepository campaignRepository;
@@ -41,7 +42,8 @@ public class PublicationServiceImpl implements PublicationService {
         Author author = authorRepository.findById(request.authorApiId())
                 .orElseThrow(() -> new EntityNotFoundException("Autor no encontrado con ID: " + request.authorApiId()));
         Campaign campaign = campaignRepository.findById(request.campaignId())
-                .orElseThrow(() -> new EntityNotFoundException("Campaña no encontrada con ID: " + request.campaignId()));
+                .orElseThrow(
+                        () -> new EntityNotFoundException("Campaña no encontrada con ID: " + request.campaignId()));
 
         Publication newPublication = PublicationMapper.toEntity(request);
 
@@ -82,12 +84,14 @@ public class PublicationServiceImpl implements PublicationService {
 
         if (!existingPublication.getAuthor().getAuthorApiId().equals(request.authorApiId())) {
             Author author = authorRepository.findById(request.authorApiId())
-                    .orElseThrow(() -> new EntityNotFoundException("Autor no encontrado con ID: " + request.authorApiId()));
+                    .orElseThrow(
+                            () -> new EntityNotFoundException("Autor no encontrado con ID: " + request.authorApiId()));
             existingPublication.setAuthor(author);
         }
         if (!existingPublication.getCampaign().getCampaignId().equals(request.campaignId())) {
             Campaign campaign = campaignRepository.findById(request.campaignId())
-                    .orElseThrow(() -> new EntityNotFoundException("Campaña no encontrada con ID: " + request.campaignId()));
+                    .orElseThrow(
+                            () -> new EntityNotFoundException("Campaña no encontrada con ID: " + request.campaignId()));
             existingPublication.setCampaign(campaign);
         }
 
@@ -97,9 +101,19 @@ public class PublicationServiceImpl implements PublicationService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Publication findEntityById(Integer publicationId) {
+        // Implementación del método necesario para la integración de otros servicios
+        // (como TextAnalysis)
+        return publicationRepository.findById(publicationId)
+                .orElseThrow(() -> new EntityNotFoundException("Publicación no encontrada con ID: " + publicationId));
+    }
+
+    @Override
     public void delete(Integer publicationId) {
         if (!publicationRepository.existsById(publicationId)) {
-            throw new EntityNotFoundException("No se puede eliminar. Publicación no encontrada con ID: " + publicationId);
+            throw new EntityNotFoundException(
+                    "No se puede eliminar. Publicación no encontrada con ID: " + publicationId);
         }
         publicationRepository.deleteById(publicationId);
     }
@@ -111,7 +125,6 @@ public class PublicationServiceImpl implements PublicationService {
         // El objeto Page tiene un método .map() que simplifica la conversión a DTO
         return publicationPage.map(PublicationMapper::toResponseDTO);
     }
-
 
     @Override
     @Transactional(readOnly = true)
@@ -145,7 +158,8 @@ public class PublicationServiceImpl implements PublicationService {
     @Override
     public List<PublicationResponseDTO> findNegativeInfluencerActivity() {
         // --- CORRECCIÓN: Se llama al método desde el repositorio unificado ---
-        List<Publication> publications = publicationRepository.findPublicationsByInfluencerCriteriaJPQL("Negative", 0.85, 100000);
+        List<Publication> publications = publicationRepository.findPublicationsByInfluencerCriteriaJPQL("Negative",
+                0.85, 100000);
         return publications.stream()
                 .map(PublicationMapper::toResponseDTO)
                 .collect(Collectors.toList());

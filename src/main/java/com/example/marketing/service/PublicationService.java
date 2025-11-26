@@ -2,6 +2,8 @@ package com.example.marketing.service;
 
 import com.example.marketing.dto.PublicationRequestDTO;
 import com.example.marketing.dto.PublicationResponseDTO;
+import com.example.marketing.model.Publication;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -18,6 +20,8 @@ public interface PublicationService {
     List<PublicationResponseDTO> findAll();
 
     Page<PublicationResponseDTO> getAllPublications(Pageable pageable);
+    
+    Publication findEntityById(Integer publicationId);
 
     PublicationResponseDTO update(Integer publicationId, PublicationRequestDTO request);
 

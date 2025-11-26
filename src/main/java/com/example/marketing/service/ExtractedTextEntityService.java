@@ -4,6 +4,9 @@ import com.example.marketing.dto.ExtractedTextEntityRequestDTO;
 import com.example.marketing.dto.ExtractedTextEntityResponseDTO;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 public interface ExtractedTextEntityService {
 
     // --- Métodos CRUD Básicos ---
@@ -12,7 +15,7 @@ public interface ExtractedTextEntityService {
 
     ExtractedTextEntityResponseDTO findById(Integer entityId);
 
-    List<ExtractedTextEntityResponseDTO> findAll();
+    Page<ExtractedTextEntityResponseDTO> findAll(Pageable pageable);
 
     ExtractedTextEntityResponseDTO update(Integer entityId, ExtractedTextEntityRequestDTO request);
 

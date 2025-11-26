@@ -19,7 +19,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/analysis/text") // Base path específico para el análisis de texto
+@RequestMapping("/api/v1/analysis/text")
 @Tag(name = "Text Analysis", description = "API for managing the cognitive analysis results of publications")
 @CrossOrigin(origins = "*")
 @RequiredArgsConstructor

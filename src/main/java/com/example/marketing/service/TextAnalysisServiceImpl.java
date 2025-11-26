@@ -3,6 +3,7 @@ package com.example.marketing.service;
 import com.example.marketing.dto.TextAnalysisRequestDTO;
 import com.example.marketing.dto.TextAnalysisResponseDTO;
 import com.example.marketing.mapper.TextAnalysisMapper; // Se asume que existe
+import com.example.marketing.model.Publication;
 import com.example.marketing.model.TextAnalysis;
 import com.example.marketing.repository.TextAnalysisRepository;
 
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,21 +25,31 @@ import java.util.stream.Collectors;
 public class TextAnalysisServiceImpl implements TextAnalysisService {
 
     private final TextAnalysisRepository textAnalysisRepository;
-    // private final PublicationService publicationService; // Podría ser inyectado para buscar la publicación
-    
+    private final PublicationService publicationService; // Podría ser inyectado
+    // para buscar la publicación
+
     // =======================================================
     // === Implementación de Métodos CRUD ====================
     // =======================================================
 
     @Override
     public TextAnalysisResponseDTO create(TextAnalysisRequestDTO request) {
-        // Lógica: Buscar la Publicación (si la relación no es manejada por el Mapper)
-        // Publication publication = publicationService.findById(request.publicationApiId());
+
+        Publication publication = publicationService.findEntityById(request.publicationApiId());
 
         TextAnalysis newAnalysis = TextAnalysisMapper.toEntity(request);
-        // newAnalysis.setPublication(publication); // Asignar la publicación
-        
+
+        newAnalysis.setPublication(publication); // 👈 ¡DESCOMENTAR Y APLICAR!
+
+
+        if (newAnalysis.getAnalysisDate() == null) {
+            newAnalysis.setAnalysisDate(ZonedDateTime.now());
+        }
+
+        // 5. Guardar
         TextAnalysis savedAnalysis = textAnalysisRepository.save(newAnalysis);
+
+        // 6. Mapear y devolver el DTO
         return TextAnalysisMapper.toResponseDTO(savedAnalysis);
     }
 
@@ -45,16 +57,17 @@ public class TextAnalysisServiceImpl implements TextAnalysisService {
     @Transactional(readOnly = true)
     public TextAnalysisResponseDTO findById(Integer analysisId) {
         TextAnalysis analysis = textAnalysisRepository.findById(analysisId)
-                .orElseThrow(() -> new EntityNotFoundException("Análisis de Texto no encontrado con ID: " + analysisId));
+                .orElseThrow(
+                        () -> new EntityNotFoundException("Análisis de Texto no encontrado con ID: " + analysisId));
         return TextAnalysisMapper.toResponseDTO(analysis);
     }
-    
+
     // @Override
     // @Transactional(readOnly = true)
     // public List<TextAnalysisResponseDTO> findAll() {
-    //     return textAnalysisRepository.findAll().stream()
-    //             .map(TextAnalysisMapper::toResponseDTO)
-    //             .collect(Collectors.toList());
+    // return textAnalysisRepository.findAll().stream()
+    // .map(TextAnalysisMapper::toResponseDTO)
+    // .collect(Collectors.toList());
     // }
 
     @Override
@@ -67,7 +80,8 @@ public class TextAnalysisServiceImpl implements TextAnalysisService {
     @Override
     public TextAnalysisResponseDTO update(Integer analysisId, TextAnalysisRequestDTO request) {
         TextAnalysis existingAnalysis = textAnalysisRepository.findById(analysisId)
-                .orElseThrow(() -> new EntityNotFoundException("Análisis de Texto no encontrado con ID: " + analysisId));
+                .orElseThrow(
+                        () -> new EntityNotFoundException("Análisis de Texto no encontrado con ID: " + analysisId));
 
         TextAnalysisMapper.copyToEntity(request, existingAnalysis);
         // Si hay que actualizar la publicación, se haría aquí.
@@ -83,7 +97,7 @@ public class TextAnalysisServiceImpl implements TextAnalysisService {
         }
         textAnalysisRepository.deleteById(analysisId);
     }
-    
+
     // =======================================================
     // === Implementación de Lógica Específica ===============
     // =======================================================
@@ -93,7 +107,7 @@ public class TextAnalysisServiceImpl implements TextAnalysisService {
     public TextAnalysisResponseDTO findByPublicationId(Integer publicationApiId) {
         TextAnalysis analysis = textAnalysisRepository.findByPublication_PublicationApiId(publicationApiId);
         if (analysis == null) {
-             throw new EntityNotFoundException("Análisis no encontrado para la Publicación ID: " + publicationApiId);
+            throw new EntityNotFoundException("Análisis no encontrado para la Publicación ID: " + publicationApiId);
         }
         return TextAnalysisMapper.toResponseDTO(analysis);
     }

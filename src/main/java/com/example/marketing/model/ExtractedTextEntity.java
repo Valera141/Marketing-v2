@@ -25,6 +25,7 @@ import lombok.NoArgsConstructor;
 public class ExtractedTextEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "entity_id")
     private Integer entityId;
 
     @ManyToOne(fetch = FetchType.LAZY)
