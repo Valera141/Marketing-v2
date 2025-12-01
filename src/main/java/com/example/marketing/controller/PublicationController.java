@@ -116,37 +116,37 @@ public class PublicationController {
     // === Endpoints for Alert Generation ====================
     // =======================================================
 
-    @Operation(summary = "Check if a wave of negative comments exists")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Verification completed successfully"),
-        @ApiResponse(responseCode = "404", description = "No publications matching the criteria were found.")
-    })
-    @GetMapping("/alerts/negative-wave")
-    public ResponseEntity<Map<String, Object>> checkNegativeWave(@RequestParam Integer campaignId) {
-        boolean hasWave = publicationService.hasNegativeWave(campaignId);
-        Map<String, Object> response = Collections.singletonMap("negativeWaveDetected", hasWave);
-        return ResponseEntity.ok(response);
-    }
+    // @Operation(summary = "Check if a wave of negative comments exists")
+    // @ApiResponses(value = {
+    //     @ApiResponse(responseCode = "200", description = "Verification completed successfully"),
+    //     @ApiResponse(responseCode = "404", description = "No publications matching the criteria were found.")
+    // })
+    // @GetMapping("/alerts/negative-wave")
+    // public ResponseEntity<Map<String, Object>> checkNegativeWave(@RequestParam Integer campaignId) {
+    //     boolean hasWave = publicationService.hasNegativeWave(campaignId);
+    //     Map<String, Object> response = Collections.singletonMap("negativeWaveDetected", hasWave);
+    //     return ResponseEntity.ok(response);
+    // }
 
-    @Operation(summary = "Find content with viral potential")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Search completed"),
-        @ApiResponse(responseCode = "404", description = "No publications matching the criteria were found.")
-    })
-    @GetMapping("/alerts/viral-potential")
-    public ResponseEntity<List<PublicationResponseDTO>> findPotentialViralContent() {
-        List<PublicationResponseDTO> publications = publicationService.findPotentialViralContent();
-        return ResponseEntity.ok(publications);
-    }
+    // @Operation(summary = "Find content with viral potential")
+    // @ApiResponses(value = {
+    //     @ApiResponse(responseCode = "200", description = "Search completed"),
+    //     @ApiResponse(responseCode = "404", description = "No publications matching the criteria were found.")
+    // })
+    // @GetMapping("/alerts/viral-potential")
+    // public ResponseEntity<List<PublicationResponseDTO>> findPotentialViralContent() {
+    //     List<PublicationResponseDTO> publications = publicationService.findPotentialViralContent();
+    //     return ResponseEntity.ok(publications);
+    // }
 
-    @Operation(summary = "Find negative influencer activity")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Search completed"),
-        @ApiResponse(responseCode = "404", description = "No publications matching the criteria were found.")
-    })
-    @GetMapping("/alerts/negative-influencers")
-    public ResponseEntity<List<PublicationResponseDTO>> findNegativeInfluencerActivity() {
-        List<PublicationResponseDTO> publications = publicationService.findNegativeInfluencerActivity();
-        return ResponseEntity.ok(publications);
-    }
+    // @Operation(summary = "Find negative influencer activity")
+    // @ApiResponses(value = {
+    //     @ApiResponse(responseCode = "200", description = "Search completed"),
+    //     @ApiResponse(responseCode = "404", description = "No publications matching the criteria were found.")
+    // })
+    // @GetMapping("/alerts/negative-influencers")
+    // public ResponseEntity<List<PublicationResponseDTO>> findNegativeInfluencerActivity() {
+    //     List<PublicationResponseDTO> publications = publicationService.findNegativeInfluencerActivity();
+    //     return ResponseEntity.ok(publications);
+    // }
 }

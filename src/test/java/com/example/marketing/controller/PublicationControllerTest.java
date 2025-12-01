@@ -209,24 +209,24 @@ class PublicationControllerTest {
     //             .andExpect(jsonPath("$.negativeWaveDetected", is(false)));
     // }
 
-    @Test
-    @DisplayName("GET /alerts/viral-potential -> 200 OK con lista")
-    void findPotentialViralContent_whenFound_thenReturnsList() throws Exception {
-        when(service.findPotentialViralContent()).thenReturn(List.of(resp(101, "Post viral!")));
+    // @Test
+    // @DisplayName("GET /alerts/viral-potential -> 200 OK con lista")
+    // void findPotentialViralContent_whenFound_thenReturnsList() throws Exception {
+    //     when(service.findPotentialViralContent()).thenReturn(List.of(resp(101, "Post viral!")));
 
-        mvc.perform(get(BASE_URL + "/alerts/viral-potential"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].publicationApiId", is(101)));
-    }
+    //     mvc.perform(get(BASE_URL + "/alerts/viral-potential"))
+    //             .andExpect(status().isOk())
+    //             .andExpect(jsonPath("$", hasSize(1)))
+    //             .andExpect(jsonPath("$[0].publicationApiId", is(101)));
+    // }
     
-    @Test
-    @DisplayName("GET /alerts/viral-potential -> 200 OK con lista vacía")
-    void findPotentialViralContent_whenNone_thenReturnsEmptyList() throws Exception {
-        when(service.findPotentialViralContent()).thenReturn(Collections.emptyList());
+    // @Test
+    // @DisplayName("GET /alerts/viral-potential -> 200 OK con lista vacía")
+    // void findPotentialViralContent_whenNone_thenReturnsEmptyList() throws Exception {
+    //     when(service.findPotentialViralContent()).thenReturn(Collections.emptyList());
 
-        mvc.perform(get(BASE_URL + "/alerts/viral-potential"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(0)));
-    }
+    //     mvc.perform(get(BASE_URL + "/alerts/viral-potential"))
+    //             .andExpect(status().isOk())
+    //             .andExpect(jsonPath("$", hasSize(0)));
+    // }
 }

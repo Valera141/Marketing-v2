@@ -33,9 +33,9 @@ public interface PublicationService {
 
     // --- Métodos de Lógica de Negocio para Alertas ---
 
-    boolean hasNegativeWave(Integer campaignId);
+    // boolean hasNegativeWave(Integer campaignId);
 
-    List<PublicationResponseDTO> findPotentialViralContent();
+    // List<PublicationResponseDTO> findPotentialViralContent();
 
-    List<PublicationResponseDTO> findNegativeInfluencerActivity();
+    // List<PublicationResponseDTO> findNegativeInfluencerActivity();
 }

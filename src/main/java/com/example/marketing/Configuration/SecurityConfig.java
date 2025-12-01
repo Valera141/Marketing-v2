@@ -1,4 +1,4 @@
-package com.example.marketing.Configuration;
+package com.example.marketing.configuration;
 
 import com.example.marketing.model.Role;
 import com.example.marketing.model.User;
@@ -35,7 +35,8 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable()) 
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/v1/auth/**").permitAll() 
+                .requestMatchers("/api/v1/auth/**").permitAll()
+                .requestMatchers("/api/v1/publications/*").permitAll() 
                 // .requestMatchers("/swagger-ui/**").permitAll()
                 // .requestMatchers("/swagger-ui.html").permitAll()
                 // .requestMatchers("/v3/api-docs/**").permitAll()

@@ -59,8 +59,8 @@ public class Publication {
     @Column(name = "collection_date", columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private OffsetDateTime collectionDate;
 
-    @OneToOne(mappedBy = "publication", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private TextAnalysis textAnalysis;
+    // @OneToOne(mappedBy = "publication", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    // private TextAnalysis textAnalysis;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_api_id", nullable = false)

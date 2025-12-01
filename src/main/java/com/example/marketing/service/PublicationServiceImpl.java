@@ -137,31 +137,31 @@ public class PublicationServiceImpl implements PublicationService {
     // === Implementación de Métodos de Alertas ==============
     // =======================================================
 
-    @Override
-    public boolean hasNegativeWave(Integer campaignId) {
-        OffsetDateTime lastHour = OffsetDateTime.now().minus(60, ChronoUnit.MINUTES);
-        // --- CORRECCIÓN: Se llama al método desde el repositorio unificado ---
-        long count = publicationRepository.countRecentNegativeByCampaignJPQL(campaignId, lastHour);
-        return count > 50;
-    }
+    // @Override
+    // public boolean hasNegativeWave(Integer campaignId) {
+    //     OffsetDateTime lastHour = OffsetDateTime.now().minus(60, ChronoUnit.MINUTES);
+    //     // --- CORRECCIÓN: Se llama al método desde el repositorio unificado ---
+    //     long count = publicationRepository.countRecentNegativeByCampaignJPQL(campaignId, lastHour);
+    //     return count > 50;
+    // }
 
-    @Override
-    public List<PublicationResponseDTO> findPotentialViralContent() {
-        OffsetDateTime lastHour = OffsetDateTime.now().minus(1, ChronoUnit.HOURS);
-        // --- CORRECCIÓN: Se llama al método desde el repositorio unificado ---
-        List<Publication> publications = publicationRepository.findPotentialViralContentJPQL(1000, 100, lastHour);
-        return publications.stream()
-                .map(PublicationMapper::toResponseDTO)
-                .collect(Collectors.toList());
-    }
+    // @Override
+    // public List<PublicationResponseDTO> findPotentialViralContent() {
+    //     OffsetDateTime lastHour = OffsetDateTime.now().minus(1, ChronoUnit.HOURS);
+    //     // --- CORRECCIÓN: Se llama al método desde el repositorio unificado ---
+    //     List<Publication> publications = publicationRepository.findPotentialViralContentJPQL(1000, 100, lastHour);
+    //     return publications.stream()
+    //             .map(PublicationMapper::toResponseDTO)
+    //             .collect(Collectors.toList());
+    // }
 
-    @Override
-    public List<PublicationResponseDTO> findNegativeInfluencerActivity() {
-        // --- CORRECCIÓN: Se llama al método desde el repositorio unificado ---
-        List<Publication> publications = publicationRepository.findPublicationsByInfluencerCriteriaJPQL("Negative",
-                0.85, 100000);
-        return publications.stream()
-                .map(PublicationMapper::toResponseDTO)
-                .collect(Collectors.toList());
-    }
+    // @Override
+    // public List<PublicationResponseDTO> findNegativeInfluencerActivity() {
+    //     // --- CORRECCIÓN: Se llama al método desde el repositorio unificado ---
+    //     List<Publication> publications = publicationRepository.findPublicationsByInfluencerCriteriaJPQL("Negative",
+    //             0.85, 100000);
+    //     return publications.stream()
+    //             .map(PublicationMapper::toResponseDTO)
+    //             .collect(Collectors.toList());
+    // }
 }
