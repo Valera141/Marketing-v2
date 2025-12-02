@@ -10,4 +10,4 @@ RUN mvn clean package -DskipTests
 
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "target/marketing-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-jar", "target/Marketing-0.0.1-SNAPSHOT.jar"]
